@@ -2,6 +2,7 @@
 
 namespace IdentityService;
 
+//Test Update
 public static class Config
 {
     public static IEnumerable<IdentityResource> IdentityResources =>
