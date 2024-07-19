@@ -1,0 +1,174 @@
+#version: '3.4'
+
+networks:
+  custom:
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+  
+services:
+  postgres:
+    environment:
+      - POSTGRES_PASSWORD=postgrespw
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postresql/data
+    networks:
+      custom:
+
+  mongodb:
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=mongopw
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodata:/var/lib/mongodb/data
+    networks:
+      custom:
+
+  rabbitmq:
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      custom:
+
+  #APP SERVICES
+  auctionservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_URLS=https://+:8081
+      - ASPNETCORE_URLS=http://+:7777
+      #- ASPNETCORE_HTTP_PORTS=8080
+      #- ASPNETCORE_HTTPS_PORTS=8081
+      - IdentityServiceUrl=http://identityservice:8080 
+      - RabbitMq__Host=rabbitmq
+      - ConnectionStrings__DefaultConnection=Server=postgres:5432;User Id=postgres;Password=postgrespw;Database=auctions
+      - Kestrel__Endpoints__Grpc__Protocols=Http2
+      - Kestrel__Endpoints__Grpc__Url=http://+:7777
+      - Kestrel__Endpoints__WebApi__Protocols=Http1
+      - Kestrel__Endpoints__WebApi__Url=Http://+:8080 
+    ports:
+      - "7001:8080"
+      - "8001:8081"
+      - "7777:7777"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    networks:
+      custom:
+
+  searchservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      #- ASPNETCORE_HTTPS_PORTS=8081
+      - RabbitMq__Host=rabbitmq
+      - ConnectionStrings__MongoDbConnection=mongodb://root:mongopw@mongodb
+      - AuctionServiceUrl=http://auctionservice:8080
+    ports:
+      - "7002:8080"
+      - "8002:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+    networks:
+      custom:
+
+  identityservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_HTTP_PORTS=80
+      - ASPNETCORE_URLS=http://+:80
+      - ClientApp=http://app.carsties.com
+      - ConnectionStrings__DefaultConnection=Server=postgres:5432;User Id=postgres;Password=postgrespw;Database=identity 
+      - VIRTUAL_HOST=id.carsties.com
+    #ports:
+    #  - "80:80"
+    volumes:
+      - ${APPDATA}/identityservice/keys:/app/keys
+    depends_on:
+      - postgres
+    networks:
+      custom:
+        ipv4_address: 10.5.0.200
+      
+  gatewayservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:8080
+      - ClientApp=https://app.carsties.com
+      - VIRTUAL_HOST=api.carsties.com
+    #ports:
+    #  - "6001:8080"
+    networks:
+      custom:
+
+  biddingservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - RabbitMq__Host=rabbitmq
+      - ConnectionStrings__BidDbConnection=mongodb://root:mongopw@mongodb
+      - IdentityServiceUrl=http://identityservice
+      - GrpcAuction=http://auctionservice:7777
+    ports:
+      - "8080"
+    networks:
+      custom:
+
+  notificationservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - RabbitMq__Host=rabbitmq
+    ports:
+      - "8080"
+    networks:
+      custom:
+
+  web-app:
+    volumes:
+      - /var/lib/web/data
+    extra_hosts:
+      - id.carsties.com:10.5.0.200
+    #ports:
+    #  - 3000:3000
+    environment:
+      - CLIENT_SECRET=secret
+      - NEXTAUTH_SECRET=secret
+      - NEXTAUTH_URL=http://app.carsties.com
+      - NEXTAUTH_URL_INTERNAL=http://web-app:3000
+      - API_URL=http://gatewayservice:8080/
+      - ID_URL=http://id.carsties.com
+      #- NEXT_PUBLIC_NOTIFY_URL=http://gatewayservice:8080/notifications
+      - NEXT_PUBLIC_NOTIFY_URL=https://api.carsties/notifications
+      - VIRTUAL_HOST=app.carsties.com
+      - VIRTUAL_PORT=3000
+    networks:
+      custom:
+
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      custom:
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./devcerts:/etc/nginx/certs
+
+volumes:
+  pgdata:
+  mongodata:  
+
+
+
+
+
+#docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml
+#mkcert -key-file carsties.com.key -cert-file carsties.com.crt app.carsties.com api.carsties.com id.carsties.com

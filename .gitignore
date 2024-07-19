@@ -1,0 +1,7 @@
+__MACOSX/
+bin/
+.vs/
+obj/
+devcerts/
+CourseAssets.zip
+CourseAssets/

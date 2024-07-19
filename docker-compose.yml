@@ -1,0 +1,63 @@
+#version: '3.4'
+#https://github.com/TryCatchLearn/Carsties
+#mkcert -key-file carsties.com.key -cert-file carsties.com.crt app.carsties.com api.carsties.com id.carsties.com
+services:
+  postgres: 
+    image: postgres
+
+  mongodb:
+    image: mongo
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
+
+  #APP SERVICES
+  auctionservice:
+    image: ${DOCKER_REGISTRY-}auctionservice
+    build:
+      context: .
+      dockerfile: src/AuctionService/Dockerfile
+
+  searchservice:
+    image: ${DOCKER_REGISTRY-}searchservice
+    build:
+      context: .
+      dockerfile: src/SearchService/Dockerfile
+
+
+  identityservice:
+    image: ${DOCKER_REGISTRY-}identityservice
+    build:
+      context: .
+      dockerfile: src/IdentityService/Dockerfile
+
+
+  gatewayservice:
+    image: ${DOCKER_REGISTRY-}gatewayservice
+    build:
+      context: .
+      dockerfile: src/GatewayService/Dockerfile
+
+
+  biddingservice:
+    image: ${DOCKER_REGISTRY-}biddingservice
+    build:
+      context: .
+      dockerfile: src/BiddingService/Dockerfile
+
+
+  notificationservice:
+    image: ${DOCKER_REGISTRY-}notificationservice
+    build:
+      context: .
+      dockerfile: src/NotificationService/Dockerfile
+
+  web-app:
+    image: ${DOCKER_REGISTRY-}web-app
+    build: 
+      context: .
+      dockerfile: frontend/web-app/Dockerfile
+
+
+#docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml
