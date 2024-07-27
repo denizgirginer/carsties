@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: web-app
+        imagePullPolicy: Never
+        #resources:
+        #  limits:
+        #    memory: "128Mi"
+        #    cpu: "500m"
+        ports:
+        - containerPort: 3000
+        env:
+        - name: CLIENT_SECRET
+          value: secret
+        - name: NEXTAUTH_SECRET
+          value: secret
+        - name: NEXTAUTH_URL
+          value: https://app.carsties.com
+        - name: API_URL
+          value: http://gateway-clusterip/
+        - name: ID_URL
+          value: https://id.denizgirginer.cloud
+
+--- # connect from inside
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-clusterip
+spec:
+  type: ClusterIP
+  selector:
+    app: webapp
+  ports:
+  - port: 3000
+    targetPort: 3000
+    name: web
+
+--- # connect from inside
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: webapp
+  ports:
+  - port: 3000
+    targetPort: 3000
+    name: web

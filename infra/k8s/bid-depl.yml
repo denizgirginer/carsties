@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bid-svc
+spec:
+  selector:
+    matchLabels:
+      app: bid-svc
+  template:
+    metadata:
+      labels:
+        app: bid-svc
+    spec:
+      containers:
+      - name: bid-svc
+        image: biddingservice
+        imagePullPolicy: Never
+        #resources:
+        #  limits:
+        #    memory: "128Mi"
+        #    cpu: "500m"
+        #ports:
+        #- containerPort: <Port>
+        env:
+        - name: RabbitMq__Host
+          value: rabbit-clusterip
+        - name: RabbitMq__Username
+          value: rabbit
+        - name: RabbitMq__Password
+          value: rabbit
+        - name: ConnectionStrings__BidDbConnection
+          value: mongodb://root:mongopw@mongo-clusterip
+        - name: IdentityServiceUrl
+          value: https://id.denizgirginer.cloud
+        - name: GrpcAuction
+          value: http://auction-clusterip:7777
+        - name: Kestrel__Endpoints__WebApi__Protocols
+          value: Http1
+        - name: Kestrel__Endpoints__WebApi__Url
+          value: Http://+:80
+
+--- # connect from inside
+apiVersion: v1
+kind: Service
+metadata:
+  name: bid-clusterip
+spec:
+  type: ClusterIP
+  selector:
+    app: bid-svc
+  ports:
+  - port: 80
+    targetPort: 80
+    name: web
