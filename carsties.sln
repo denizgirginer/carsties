@@ -21,6 +21,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BiddingService", "src\Biddi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationService", "src\NotificationService\NotificationService.csproj", "{28CDDB85-B466-4205-ADF0-4134C5F0C20B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{61BC3FE5-17D6-4FD5-896A-0779E4D33F68}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\deploy-identity.yml = .github\workflows\deploy-identity.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infra", "infra", "{30679FC7-FC88-4EFE-AD3F-633CE5C5DB88}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{6E361242-0C16-4436-ABAD-D664413E079C}"
+	ProjectSection(SolutionItems) = preProject
+		infra\k8s\postgres-depl.yml = infra\k8s\postgres-depl.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +83,7 @@ Global
 		{089DD61F-64D3-4304-908F-EC5CF9B034F1} = {74EF22B7-310A-468B-AAF0-D6E17A8DC14A}
 		{8AA78A91-0E61-48DD-AFC3-618A1784B875} = {74EF22B7-310A-468B-AAF0-D6E17A8DC14A}
 		{28CDDB85-B466-4205-ADF0-4134C5F0C20B} = {74EF22B7-310A-468B-AAF0-D6E17A8DC14A}
+		{6E361242-0C16-4436-ABAD-D664413E079C} = {30679FC7-FC88-4EFE-AD3F-633CE5C5DB88}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FC10B04C-E864-4B1D-A5DF-7BC4DAD790B7}

@@ -36,7 +36,7 @@ internal static class HostingExtensions
 
                 if (builder.Environment.IsProduction())
                 {
-                    options.IssuerUri = "https://id.trycatchlearn.com";
+                    options.IssuerUri = "https://id.denizgirginer.cloud";
                 }
 
                 // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
@@ -77,7 +77,7 @@ internal static class HostingExtensions
             app.Use(async (ctx, next) =>
             {
                 var serverUrls = ctx.RequestServices.GetRequiredService<IServerUrls>();
-                serverUrls.Origin = serverUrls.Origin = "https://id.trycatchlearn.com";
+                serverUrls.Origin = serverUrls.Origin = "https://id.denizgirginer.cloud";
                 await next();
             });
         }

@@ -172,3 +172,5 @@ volumes:
 
 #docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml
 #mkcert -key-file carsties.com.key -cert-file carsties.com.crt app.carsties.com api.carsties.com id.carsties.com
+#mkcert -key-file server.key -cert-file server.crt app.carsties.com api.carsties.com
+#kubectl create secret tls carsties-app-tls --key server.key --cert server.crt

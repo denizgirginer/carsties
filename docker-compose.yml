@@ -61,3 +61,7 @@ services:
 
 
 #docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml
+
+# linux system register: sudo systemctl enable id-docker.service
+
+# service file: /etc/systemd/system/id-docker.service
