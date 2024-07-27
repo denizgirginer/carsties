@@ -26,6 +26,8 @@ spec:
           value: Production
         - name: ClientApp
           value: https://app.carsties.com
+        - name: IdentityServiceUrl
+          value: https://id.denizgirginer.cloud
         - name: Kestrel__Endpoints__WebApi__Protocols
           value: Http1
         - name: Kestrel__Endpoints__WebApi__Url
