@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY_IMAGE: denizgirginer8/searchservice
-  DOCKERFILE: src/SearchService/Docerfile
+  DOCKERFILE: src/SearchService/Dockerfile
   DEPLOYMENT_NAME: search-svc
 jobs:
   build:

@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY_IMAGE: denizgirginer8/notificationservice
-  DOCKERFILE: src/NotificationService/Docerfile
+  DOCKERFILE: src/NotificationService/Dockerfile
   DEPLOYMENT_NAME: notify-svc
 jobs:
   build:

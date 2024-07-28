@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY_IMAGE: denizgirginer8/gatewayservice
-  DOCKERFILE: src/GatewayService/Docerfile
+  DOCKERFILE: src/GatewayService/Dockerfile
   DEPLOYMENT_NAME: gateway-svc
 jobs:
   build:

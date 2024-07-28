@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY_IMAGE: denizgirginer8/biddingservice
-  DOCKERFILE: src/BiddingService/Docerfile
+  DOCKERFILE: src/BiddingService/Dockerfile
   DEPLOYMENT_NAME: bid-svc
 jobs:
   build:

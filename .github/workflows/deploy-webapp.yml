@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY_IMAGE: denizgirginer8/web-app
-  DOCKERFILE: frontend/web-app/Docerfile
+  DOCKERFILE: frontend/web-app/Dockerfile
   DEPLOYMENT_NAME: webapp
 jobs:
   build:
