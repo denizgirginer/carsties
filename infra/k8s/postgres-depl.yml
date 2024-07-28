@@ -16,7 +16,10 @@ spec:
         image: postgres
         env:
           - name: POSTGRES_PASSWORD
-            value: postgrespw
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: password
         #resources:
         #  limits:
         #    memory: "128Mi"

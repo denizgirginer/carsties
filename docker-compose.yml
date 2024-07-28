@@ -65,3 +65,5 @@ services:
 # linux system register: sudo systemctl enable id-docker.service
 
 # service file: /etc/systemd/system/id-docker.service
+
+# kubectl create secret generic postgres-password --from-literal=postgrespwkey=postgrespw

@@ -16,9 +16,15 @@ spec:
         image: rabbitmq:3-management
         env:
           - name: RABBITMQ_DEFAULT_USER
-            value: rabbit
+            valueFrom:
+              secretKeyRef:
+                name: rabbit-secret
+                key: username
           - name: RABBITMQ_DEFAULT_PASS
-            value: rabbit
+            valueFrom:
+              secretKeyRef:
+                name: rabbit-secret
+                key: password
         #resources:
         #  limits:
         #    memory: "128Mi"

@@ -29,7 +29,10 @@ spec:
         - name: RabbitMq__Password
           value: rabbit
         - name: ConnectionStrings__DefaultConnection
-          value: Server=postgres-clusterip;User Id=postgres;Password=postgrespw;Database=auctions
+          valueFrom:
+            secretKeyRef:
+              name: auction-secret
+              key: connectionString
         - name: IdentityServiceUrl
           value: https://id.denizgirginer.cloud
         - name: Kestrel__Endpoints__Grpc__Protocols
