@@ -13,8 +13,8 @@ spec:
     spec:
       containers:
       - name: gateway-svc
-        image: gatewayservice
-        imagePullPolicy: Never
+        image: denizgirginer8/gatewayservice
+        imagePullPolicy: Always
         #resources:
         #  limits:
         #    memory: "128Mi"

@@ -13,8 +13,8 @@ spec:
     spec:
       containers:
       - name: search-svc
-        image: searchservice
-        imagePullPolicy: Never
+        image: denizgirginer8/searchservice
+        imagePullPolicy: Always
         #resources:
         #  limits:
         #    memory: "128Mi"

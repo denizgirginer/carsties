@@ -13,8 +13,8 @@ spec:
     spec:
       containers:
       - name: notify-svc
-        image: notificationservice
-        imagePullPolicy: Never
+        image: denizgirginer8/notificationservice
+        imagePullPolicy: Always
         #resources:
         #  limits:
         #    memory: "128Mi"

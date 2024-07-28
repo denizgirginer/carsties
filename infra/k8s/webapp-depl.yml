@@ -13,8 +13,8 @@ spec:
     spec:
       containers:
       - name: webapp
-        image: web-app
-        imagePullPolicy: Never
+        image: denizgirginer8/web-app
+        imagePullPolicy: Always
         #resources:
         #  limits:
         #    memory: "128Mi"
@@ -46,20 +46,6 @@ metadata:
   name: webapp-clusterip
 spec:
   type: ClusterIP
-  selector:
-    app: webapp
-  ports:
-  - port: 3000
-    targetPort: 3000
-    name: web
-
---- # connect from inside
-apiVersion: v1
-kind: Service
-metadata:
-  name: webapp-lb
-spec:
-  type: LoadBalancer
   selector:
     app: webapp
   ports:

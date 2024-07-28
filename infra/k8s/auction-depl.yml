@@ -13,8 +13,8 @@ spec:
     spec:
       containers:
       - name: auction-svc
-        image: auctionservice
-        imagePullPolicy: Never
+        image: denizgirginer8/auctionservice
+        imagePullPolicy: Always
         #resources:
         #  limits:
         #    memory: "128Mi"
@@ -67,15 +67,3 @@ spec:
     targetPort: 7777
     name: grpc
   
---- # connect from outside
-apiVersion: v1
-kind: Service
-metadata:
-  name: auction-lb
-spec:
-  type: LoadBalancer
-  selector:
-    app: auction-svc
-  ports:
-  - port: 5001 #outside port
-    targetPort: 80 #inside port

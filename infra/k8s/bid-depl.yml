@@ -13,8 +13,8 @@ spec:
     spec:
       containers:
       - name: bid-svc
-        image: biddingservice
-        imagePullPolicy: Never
+        image: denizgirginer8/biddingservice
+        imagePullPolicy: Always
         #resources:
         #  limits:
         #    memory: "128Mi"

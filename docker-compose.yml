@@ -67,3 +67,9 @@ services:
 # service file: /etc/systemd/system/id-docker.service
 
 # kubectl create secret generic postgres-password --from-literal=postgrespwkey=postgrespw
+
+# kubectl config get-contexts
+# kubectl get nodes
+# kubectl config use-context do-fra1-carsties-app
+# kubectl version
+# kubectl cluster-info

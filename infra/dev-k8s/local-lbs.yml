@@ -1,0 +1,64 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: postgres
+  ports:
+  - port: 5432 #outside port
+    targetPort: 5432 #inside port
+
+--- # connect from outside
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbit-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: rabbitmq
+  ports:
+  - port: 15672 #outside port
+    targetPort: 15672 #inside port
+
+--- # connect from inside
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: webapp
+  ports:
+  - port: 3000
+    targetPort: 3000
+    name: web
+
+--- # connect from outside
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: mongo
+  ports:
+  - port: 27017 #outside port
+    targetPort: 27017 #inside port
+
+--- # connect from outside
+apiVersion: v1
+kind: Service
+metadata:
+  name: auction-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: auction-svc
+  ports:
+  - port: 5001 #outside port
+    targetPort: 80 #inside port

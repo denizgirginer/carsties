@@ -5,3 +5,4 @@ obj/
 devcerts/
 CourseAssets.zip
 CourseAssets/
+infra/prod-k8s/prod-secrets.yml
