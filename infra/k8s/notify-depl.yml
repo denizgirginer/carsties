@@ -33,7 +33,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: notify-secret
-              key: rabbitpw
+              key: rabbitPw
         - name: Kestrel__Endpoints__WebApi__Protocols
           value: Http1
         - name: Kestrel__Endpoints__WebApi__Url
