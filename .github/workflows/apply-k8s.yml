@@ -18,4 +18,5 @@ jobs:
         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
     - name: Save DigitalOcean kube config
       run: doctl kubernetes cluster kubeconfig save carsties-app
+    - run: kubectl apply -f infra/k8s
     - run: kubectl apply -f infra/prod-k8s
