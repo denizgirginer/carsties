@@ -44,7 +44,7 @@ spec:
         - name: Kestrel__Endpoints__WebApi__Protocols
           value: Http1
         - name: Kestrel__Endpoints__WebApi__Url
-          value: Http://+:80
+          value: Http://+:8080
 --- # connect from inside
 apiVersion: v1
 kind: Service
@@ -56,5 +56,5 @@ spec:
     app: search-svc
   ports:
   - port: 80
-    targetPort: 80
+    targetPort: 8080
     name: web
