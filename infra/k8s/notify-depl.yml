@@ -26,14 +26,14 @@ spec:
           value: rabbit-clusterip
         - name: RabbitMq__Username
           valueFrom:
-              secretKeyRef:
-                name: notify-secret
-                key: rabbitUn
+            secretKeyRef:
+              name: notify-secret
+              key: rabbitUn
         - name: RabbitMq__Password
           valueFrom:
-              secretKeyRef:
-                name: notify-secret
-                key: rabbitpw
+            secretKeyRef:
+              name: notify-secret
+              key: rabbitpw
         - name: Kestrel__Endpoints__WebApi__Protocols
           value: Http1
         - name: Kestrel__Endpoints__WebApi__Url
