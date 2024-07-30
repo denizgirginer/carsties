@@ -25,7 +25,10 @@ spec:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
         - name: ClientApp
-          value: https://app.carsties.com
+          valueFrom:
+              secretKeyRef:
+                name: gateway-secret
+                key: clientApp
         - name: IdentityServiceUrl
           value: https://id.denizgirginer.cloud
         - name: Kestrel__Endpoints__WebApi__Protocols

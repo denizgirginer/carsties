@@ -33,7 +33,10 @@ spec:
                 name: webapp-secret
                 key: authSecret
         - name: NEXTAUTH_URL
-          value: https://app.carsties.com
+          valueFrom:
+              secretKeyRef:
+                name: webapp-secret
+                key: nextAuthUrl
         - name: API_URL
           value: http://gateway-clusterip/
         - name: ID_URL
